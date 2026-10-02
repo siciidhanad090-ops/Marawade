@@ -1,78 +1,54 @@
-const loginBtn = document.getElementById("loginBtn");
-const signupBtn = document.getElementById("signupBtn");
-const heroSignup = document.getElementById("heroSignup");
+const addPostBtn = document.getElementById("addPostBtn");
+const dashboard = document.getElementById("dashboard");
+const postForm = document.getElementById("postForm");
+const postsContainer = document.getElementById("postsContainer");
 
-const loginModal = document.getElementById("loginModal");
-const signupModal = document.getElementById("signupModal");
+addPostBtn.addEventListener("click", function () {
+    dashboard.style.display = "block";
 
-const closeLogin = document.getElementById("closeLogin");
-const closeSignup = document.getElementById("closeSignup");
-
-const switchSignup = document.getElementById("switchSignup");
-const switchLogin = document.getElementById("switchLogin");
-
-
-function showLogin() {
-    loginModal.style.display = "flex";
-    signupModal.style.display = "none";
-}
-
-function showSignup() {
-    signupModal.style.display = "flex";
-    loginModal.style.display = "none";
-}
-
-function closeModals() {
-    loginModal.style.display = "none";
-    signupModal.style.display = "none";
-}
-
-
-loginBtn.addEventListener("click", showLogin);
-
-signupBtn.addEventListener("click", showSignup);
-
-heroSignup.addEventListener("click", showSignup);
-
-closeLogin.addEventListener("click", closeModals);
-
-closeSignup.addEventListener("click", closeModals);
-
-switchSignup.addEventListener("click", showSignup);
-
-switchLogin.addEventListener("click", showLogin);
-
-
-// Demo signup
-document.getElementById("signupForm").addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-    const name = document.getElementById("signupName").value;
-
-    alert("Ku soo dhowow Marawade, " + name + "!");
-
-    closeModals();
+    dashboard.scrollIntoView({
+        behavior: "smooth"
+    });
 });
 
-
-// Demo login
-document.getElementById("loginForm").addEventListener("submit", function(event) {
+postForm.addEventListener("submit", function (event) {
 
     event.preventDefault();
 
-    alert("Login waa la isku dayay.");
+    const title = document.getElementById("postTitle").value;
+    const content = document.getElementById("postContent").value;
+    const image = document.getElementById("postImage").files[0];
 
-    closeModals();
-});
+    const post = document.createElement("article");
+    post.className = "post";
 
+    const titleElement = document.createElement("h3");
+    titleElement.textContent = title;
 
-// Contact
-document.getElementById("contactForm").addEventListener("submit", function(event) {
+    const contentElement = document.createElement("p");
+    contentElement.textContent = content;
 
-    event.preventDefault();
+    post.appendChild(titleElement);
+    post.appendChild(contentElement);
 
-    alert("Fariintaada waa la diray.");
+    if (image) {
 
-    this.reset();
+        const imageElement = document.createElement("img");
+
+        imageElement.src = URL.createObjectURL(image);
+
+        imageElement.alt = title;
+
+        post.appendChild(imageElement);
+    }
+
+    postsContainer.prepend(post);
+
+    postForm.reset();
+
+    alert("Qoraalka waa la daabacay!");
+
+    document.getElementById("posts").scrollIntoView({
+        behavior: "smooth"
+    });
 });
